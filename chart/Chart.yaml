@@ -1,0 +1,4 @@
+apiVersion: v2
+name: key-generator
+description: A Helm chart to deploy YAML generator web service
+version: 0.1.0

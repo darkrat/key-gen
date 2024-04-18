@@ -1,0 +1,6 @@
+image:
+  repository:
+  tag:
+service:
+  type: NodePort
+  port: 5000

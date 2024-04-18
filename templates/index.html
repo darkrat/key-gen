@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keys Generator</title>
+</head>
+<body>
+    <h1>Keys Generator</h1>
+    <form action="/" method="POST">
+        <label for="team">Team:</label><br>
+        <input type="text" id="team" name="team" required><br><br>
+        <label for="project">Project:</label><br>
+        <input type="text" id="project" name="project" required><br><br>
+        <label for="environment">Environment:</label><br>
+        <input type="text" id="environment" name="environment" required><br><br>
+        <label for="pattern">Pattern:</label><br>
+        <input type="text" id="pattern" name="pattern" required><br><br>
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+        <input type="submit" value="Generate YAML">
+    </form>
+    <br>
+    <textarea id="yamlResult" rows="10" cols="80" readonly></textarea><br><br>
+    <div id="yamlResultDiv"></div><br><br>
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+
+    <script>
+        // Функция для копирования результата в буфер обмена
+        function copyToClipboard() {
+            var yamlResult = document.getElementById("yamlResult");
+            yamlResult.select();
+            document.execCommand("copy");
+            alert("Copied to clipboard!");
+        }
+
+        // Обработка AJAX запроса и отображение результата в текстовом поле
+        document.querySelector('form').onsubmit = function(event) {
+            event.preventDefault();
+            var form_data = new FormData(this);
+            fetch('/', {
+                method: 'POST',
+                body: form_data
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("yamlResult").value = data.yaml_str;
+                document.getElementById("yamlResultDiv") = data.yaml_str;
+            });
+        };
+    </script>
+</body>
+</html>
